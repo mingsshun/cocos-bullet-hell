@@ -1,15 +1,8 @@
-import { _decorator } from 'cc';
-const { ccclass, property } = _decorator;
+import { _decorator, Vec3 } from 'cc';
 
-@ccclass('MoveComponent')
 export class MoveComponent {
-    start() {
-
-    }
-
-    update(deltaTime: number) {
-
-    }
+    direction = new Vec3();
+    speed = 0;
 }
 
 
