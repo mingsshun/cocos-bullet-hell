@@ -96,13 +96,14 @@ export class CollisionSystem {
             if (e.isRelease) continue;
 
             const eCol = e.getComponent(ComponentKey.COLLIDER);
+            const eDmg = e.getComponent(ComponentKey.DAMAGE);
 
             if (!this.isCollide(
                 e.node.worldPosition, eCol.radius,
                 player.node.worldPosition, pCol.radius
             )) continue;
 
-            pHealth.hp -= 10;
+            pHealth.hp -= eDmg.value;
 
             this.releaseEntity(e);
 

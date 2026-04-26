@@ -12,6 +12,7 @@ import { SpawnSystem } from '../Systems/SpawnSystem';
 import { GameOverUI } from '../UI/GameOverUI';
 import { EntityManager } from './EntityManager';
 import { PoolManager } from './pool/PoolManager';
+import { GameConfig } from '../Config';
 const { ccclass, property } = _decorator;
 
 export enum GameState {
@@ -35,7 +36,7 @@ export class GameManager extends Component {
     @property(GameOverUI) gameOverUI: GameOverUI = null!;
 
     private time = 0;
-    private duration = 60;
+    private duration = GameConfig.game_duration;
 
     protected onLoad(): void {
         GameManager.instance = this;
@@ -125,10 +126,16 @@ export class GameManager extends Component {
 
         EntityManager.clearAll();
 
+        SpawnSystem.reset();
+
         this.playerNode.active = true;
         this.initPlayer();
 
         this.gameOverUI.hide();
+    }
+
+    getTime(): number {
+        return this.time;
     }
 }
 

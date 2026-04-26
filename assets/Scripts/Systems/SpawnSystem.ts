@@ -6,7 +6,14 @@ import { GameConfig } from "../Config";
 export class SpawnSystem {
 
     private static timer = 0;
-    private static interval = 1.5;
+    private static decayRate = GameConfig.spawn_enemy.decay_rate;
+    private static minInterval = GameConfig.spawn_enemy.min_interval;
+    private static interval = GameConfig.spawn_enemy.start_interval;
+
+    static reset() {
+        this.interval = GameConfig.spawn_enemy.start_interval;
+        this.timer = 0;
+    }
 
     static update(dt: number) {
 
@@ -22,7 +29,7 @@ export class SpawnSystem {
 
         this.timer = this.interval;
 
-        // this.interval = Math.max(0.5, this.interval * 0.98);
+        this.interval = Math.max(this.minInterval, this.interval * this.decayRate);
     }
 
     static randomRange(min: number, max: number): number {

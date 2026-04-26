@@ -9,6 +9,8 @@ import { HealthComponent } from '../Components/HealthComponent';
 import { ColliderComponent } from '../Components/ColliderComponent';
 import { ShootComponent } from '../Components/ShootComponent';
 import { AIComponent, AIType } from '../Components/AIComponent';
+import { GameConfig } from '../Config';
+import { DamageComponent } from '../Components/DamageComponent';
 const { ccclass, property } = _decorator;
 
 @ccclass('EnemyAuthoring')
@@ -16,6 +18,7 @@ export class EnemyAuthoring extends BaseAuthoring {
     @property isChaser: boolean = false;
     @property hp: number = 50;
     @property moveSpeed: number = 100;
+    @property radius: number = 25;
 
     protected override build(entity: Entity): void {
         entity.node = this.node;
@@ -24,6 +27,7 @@ export class EnemyAuthoring extends BaseAuthoring {
 
         entity.addComponent(ComponentKey.HEALTH, new HealthComponent());
         entity.addComponent(ComponentKey.COLLIDER, new ColliderComponent());
+        entity.addComponent(ComponentKey.DAMAGE, new DamageComponent());
 
         if (this.isChaser) {
             entity.addComponent(ComponentKey.MOVE, new MoveComponent());
@@ -38,17 +42,23 @@ export class EnemyAuthoring extends BaseAuthoring {
 
     public override init(...args: any[]): void {
         const health = this.entity.getComponent(ComponentKey.HEALTH);
-        health.hp = this.hp;
+        health.hp = this.isChaser ? GameConfig.enemy.chaser_hp : GameConfig.enemy.shooter_hp;
+
+        const collider = this.entity.getComponent(ComponentKey.COLLIDER);
+        collider.radius = this.radius;
+
+        const damage = this.entity.getComponent(ComponentKey.DAMAGE);
+        damage.value = GameConfig.enemy.contact_damage;
 
         if (this.isChaser) {
             const move = this.entity.getComponent(ComponentKey.MOVE);
-            move.speed = this.moveSpeed;
+            move.speed = GameConfig.enemy.chaser_speed;
             move.direction.set(0, 0, 0);
         }
         else{
             const shoot = this.entity.getComponent(ComponentKey.SHOOT);
-            shoot.range = 400;  
-            shoot.cooldown = 1.5;
+            shoot.range = GameConfig.enemy_shooter.range;  
+            shoot.cooldown = GameConfig.enemy_shooter.cooldown;
             shoot.timer = 0;
         }
 

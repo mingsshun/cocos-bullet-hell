@@ -9,13 +9,14 @@ import { DashComponent } from '../Components/DashComponent';
 import { HealthComponent } from '../Components/HealthComponent';
 import { ColliderComponent } from '../Components/ColliderComponent';
 import { ShootComponent } from '../Components/ShootComponent';
+import { GameConfig } from '../Config';
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerAuthoring')
 export class PlayerAuthoring extends BaseAuthoring {
     @property speed: number = 200;
-
     @property hp: number = 100;
+    @property radius: number = 24;
 
     protected override build(entity: Entity): void {
         entity.type = EntityType.PLAYER;
@@ -30,16 +31,19 @@ export class PlayerAuthoring extends BaseAuthoring {
 
     public override init(...args: any[]): void {
         const move = this.entity.getComponent(ComponentKey.MOVE);
-        move.speed = this.speed;
+        move.speed = GameConfig.player.speed;
         move.direction.set(0, 0, 0);
 
         const health = this.entity.getComponent(ComponentKey.HEALTH);
-        health.hp = this.hp;
+        health.hp = GameConfig.player.hp;
 
         const shoot = this.entity.getComponent(ComponentKey.SHOOT);
-        shoot.range = 250;
-        shoot.cooldown = 0.3;
+        shoot.range = GameConfig.player_shooter.range;
+        shoot.cooldown = GameConfig.player_shooter.cooldown;
         shoot.timer = 0;
+
+        const collider = this.entity.getComponent(ComponentKey.COLLIDER);
+        collider.radius = this.radius;
 
         this.entity.isRelease = false;
         this.node.active = true;

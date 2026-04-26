@@ -1,3 +1,4 @@
+import { GameConfig } from '../Config';
 import { ComponentKey } from '../Constants/ComponentKey';
 import { EntityManager } from '../Core/EntityManager';
 import { InputManager } from '../Input/InputManager';
@@ -25,7 +26,8 @@ export class DashSystem {
 
             if (dash.timer <= 0) {
                 dash.isDashing = false;
-                move.speed /= dash.speedMultiplier;
+                // move.speed /= dash.speedMultiplier;
+                move.speed = GameConfig.player.speed;
             }
 
             return;
@@ -40,7 +42,8 @@ export class DashSystem {
 
             dash.direction.set(move.direction).normalize();
 
-            move.speed *= dash.speedMultiplier;
+            // move.speed *= dash.speedMultiplier;
+            move.speed = GameConfig.player.dash_speed;
         }
     }
 }
