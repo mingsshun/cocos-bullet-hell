@@ -2,10 +2,12 @@ import { _decorator, Node } from 'cc';
 import { ComponentKey } from '../Constants/ComponentKey';
 import { ComponentMap } from '../Constants/ComponentMap';
 import { EntityType } from '../Constants/EntityType';
+import { PoolKey } from '../Constants/PoolKey';
 export class Entity {
     private components = new Map<ComponentKey, any>();
 
     public type: EntityType;
+    public poolKey: PoolKey;
     public node: Node;
     public isRelease: boolean = false;
 

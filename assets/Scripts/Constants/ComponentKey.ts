@@ -1,5 +1,9 @@
 export enum ComponentKey {
     MOVE,
     INPUT,
-    DASH
+    DASH,
+    HEALTH,
+    COLLIDER,
+    SHOOT,
+    AI
 }

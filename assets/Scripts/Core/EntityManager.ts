@@ -4,7 +4,8 @@ import { Entity } from "../Entity/Entity";
 export class EntityManager {
     static players: Entity[] = [];
     static enemies: Entity[] = [];
-    static bullets: Entity[] = [];
+    static player_bullets: Entity[] = [];
+    static enemy_bullets: Entity[] = [];
 
     static all: Entity[] = [];
 
@@ -20,8 +21,12 @@ export class EntityManager {
                 this.enemies.push(entity);
                 break;
 
-            case EntityType.BULLET:
-                this.bullets.push(entity);
+            case EntityType.PLAYER_BULLET:
+                this.player_bullets.push(entity);
+                break;
+
+            case EntityType.ENEMY_BULLET:
+                this.enemy_bullets.push(entity);
                 break;
         }
     }
@@ -33,7 +38,8 @@ export class EntityManager {
     static cleanup(): void {
         this.players = this.players.filter(e => !e.isRelease);
         this.enemies = this.enemies.filter(e => !e.isRelease);
-        this.bullets = this.bullets.filter(e => !e.isRelease);
+        this.player_bullets = this.player_bullets.filter(e => !e.isRelease);
+        this.enemy_bullets = this.enemy_bullets.filter(e => !e.isRelease);
 
         this.all = this.all.filter(e => !e.isRelease);
     }
@@ -45,7 +51,8 @@ export class EntityManager {
     static clearAll(): void {
         this.players.length = 0;
         this.enemies.length = 0;
-        this.bullets.length = 0;
+        this.player_bullets.length = 0;
+        this.enemy_bullets.length = 0
 
         this.all.length = 0;
     }

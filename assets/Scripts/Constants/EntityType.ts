@@ -1,5 +1,6 @@
 export enum EntityType{
     PLAYER,
     ENEMY,
-    BULLET
+    PLAYER_BULLET,
+    ENEMY_BULLET,
 }

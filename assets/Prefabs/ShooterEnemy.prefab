@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "Enemy",
+    "_name": "ShooterEnemy",
     "_objFlags": 0,
     "_native": "",
     "data": {
@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Enemy",
+    "_name": "ShooterEnemy",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -25,10 +25,13 @@
     "_components": [
       {
         "__id__": 8
+      },
+      {
+        "__id__": 10
       }
     ],
     "_prefab": {
-      "__id__": 10
+      "__id__": 12
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -151,9 +154,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 140,
-      "b": 0,
+      "r": 106,
+      "g": 13,
+      "b": 173,
       "a": 255
     },
     "_spriteFrame": {
@@ -220,6 +223,29 @@
     "fileId": "6cDuXUqdNFsq+z0OxTeOBC"
   },
   {
+    "__type__": "b77e4tHUTxD/bOtWVOwPqV7",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 11
+    },
+    "sprite": {
+      "__id__": 5
+    },
+    "isChaser": false,
+    "hp": 50,
+    "moveSpeed": 100,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "3cwFPUQOlIDrlL5Fpah0Lc"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -228,6 +254,7 @@
       "__id__": 0
     },
     "fileId": "a1qxEl9HpG0L9IsTuyeYq8",
+    "instance": null,
     "targetOverrides": null
   }
 ]

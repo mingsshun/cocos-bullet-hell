@@ -6,29 +6,42 @@ import { InputSystem } from '../Systems/InputSystem';
 import { MoveSystem } from '../Systems/MoveSystem';
 import { EntityManager } from './EntityManager';
 import { DashSystem } from '../Systems/DashSystem';
+import { PlayerAuthoring } from '../Authoring/PlayerAuthoring';
+import { SpawnSystem } from '../Systems/SpawnSystem';
+import { CombatSystem } from '../Systems/CombatSystem';
+import { AISystem } from '../Systems/AISystem';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
 export class GameManager extends Component {
-    @property(Prefab) enemyBulletPrefab: Prefab = null;
-    @property(Prefab) playerBulletPrefab: Prefab = null;
-    @property(Prefab) enemyChaserPrefab: Prefab = null;
-    @property(Prefab) enemyShooterPrefab: Prefab = null;
+    @property(Prefab) bulletPrefab: Prefab = null;
+    @property(Prefab) chaserEnemyPrefab: Prefab = null;
+    @property(Prefab) shooterEnemyPrefab: Prefab = null;
 
+    @property(Node) playerNode: Node = null;
     @property(Node) enemyContainer: Node = null;
     @property(Node) bulletContainer: Node = null;
 
     start() {
+        const playerAuthoring = this.playerNode.getComponent(PlayerAuthoring);
+        playerAuthoring.init();
+        EntityManager.add(playerAuthoring.getEntity());
+        //
         const inputManager = new InputManager();
         this.initPools();
     }
 
     update(deltaTime: number) {
-        InputSystem.update();
+        SpawnSystem.update(deltaTime);
 
+        InputSystem.update();
         DashSystem.update(deltaTime);
+        AISystem.update();
 
         MoveSystem.update(deltaTime);
+
+        CombatSystem.update(deltaTime);
+        //Collision
 
         EntityManager.cleanup();
     }
@@ -38,26 +51,23 @@ export class GameManager extends Component {
         // Enemy
         PoolManager.createPool(
             PoolKey.ENEMY_CHASER,
-            this.enemyChaserPrefab,
+            this.chaserEnemyPrefab,
             this.enemyContainer
         );
-
         PoolManager.createPool(
             PoolKey.ENEMY_SHOOTER,
-            this.enemyShooterPrefab,
+            this.shooterEnemyPrefab,
             this.enemyContainer
         );
-
         // Bullet
         PoolManager.createPool(
             PoolKey.BULLET_PLAYER,
-            this.playerBulletPrefab,
+            this.bulletPrefab,
             this.bulletContainer
         );
-
         PoolManager.createPool(
             PoolKey.BULLET_ENEMY,
-            this.enemyBulletPrefab,
+            this.bulletPrefab,
             this.bulletContainer
         );
     }
