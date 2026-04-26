@@ -22,7 +22,6 @@ export class DashSystem {
             dash.timer -= dt;
 
             move.direction.set(dash.direction);
-            move.speed *= dash.speedMultiplier;
 
             if (dash.timer <= 0) {
                 dash.isDashing = false;
@@ -33,8 +32,6 @@ export class DashSystem {
         }
 
         if (dash.cooldownTimer <= 0 && InputManager.instance.isDashPressed()) {
-
-            console.log("dashhhh")
             if (move.direction.lengthSqr() === 0) return;
 
             dash.isDashing = true;
@@ -42,6 +39,8 @@ export class DashSystem {
             dash.cooldownTimer = dash.cooldown;
 
             dash.direction.set(move.direction).normalize();
+
+            move.speed *= dash.speedMultiplier;
         }
     }
 }

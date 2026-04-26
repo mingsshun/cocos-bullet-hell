@@ -9,7 +9,7 @@ export class DashComponent {
     cooldown = 1;
     cooldownTimer = 0;
 
-    speedMultiplier = 1.1;
+    speedMultiplier = 3;
 
     direction = new Vec3();
 }
