@@ -10,6 +10,7 @@ import { PlayerAuthoring } from '../Authoring/PlayerAuthoring';
 import { SpawnSystem } from '../Systems/SpawnSystem';
 import { CombatSystem } from '../Systems/CombatSystem';
 import { AISystem } from '../Systems/AISystem';
+import { CollisionSystem } from '../Systems/CollisionSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -41,7 +42,7 @@ export class GameManager extends Component {
         MoveSystem.update(deltaTime);
 
         CombatSystem.update(deltaTime);
-        //Collision
+        CollisionSystem.update();
 
         EntityManager.cleanup();
     }
@@ -70,6 +71,10 @@ export class GameManager extends Component {
             this.bulletPrefab,
             this.bulletContainer
         );
+    }
+
+    static gameOver(isWin: boolean) {
+        console.log("isWin: " + isWin);
     }
 }
 

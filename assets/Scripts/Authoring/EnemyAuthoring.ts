@@ -18,6 +18,7 @@ export class EnemyAuthoring extends BaseAuthoring {
     @property moveSpeed: number = 100;
 
     protected override build(entity: Entity): void {
+        entity.node = this.node;
         entity.type = EntityType.ENEMY;
         entity.poolKey = this.isChaser ? PoolKey.ENEMY_CHASER : PoolKey.ENEMY_SHOOTER;
 

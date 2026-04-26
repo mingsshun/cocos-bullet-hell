@@ -1,3 +1,3 @@
 export class HealthComponent {
-    hp: number
+    hp = 100;
 }

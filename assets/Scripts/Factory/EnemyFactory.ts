@@ -1,9 +1,8 @@
 import { Vec3 } from 'cc';
-import { PoolKey } from '../Constants/PoolKey';
-import { PoolManager } from '../Core/pool/PoolManager';
 import { EnemyAuthoring } from '../Authoring/EnemyAuthoring';
-import { EntityType } from '../Constants/EntityType';
+import { PoolKey } from '../Constants/PoolKey';
 import { EntityManager } from '../Core/EntityManager';
+import { PoolManager } from '../Core/pool/PoolManager';
 
 export class EnemyFactory {
 

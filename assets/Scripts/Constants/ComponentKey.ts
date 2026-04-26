@@ -5,5 +5,6 @@ export enum ComponentKey {
     HEALTH,
     COLLIDER,
     SHOOT,
-    AI
+    AI,
+    DAMAGE
 }

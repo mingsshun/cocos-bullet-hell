@@ -1,5 +1,6 @@
 import { AIComponent } from '../Components/AIComponent';
 import { ColliderComponent } from '../Components/ColliderComponent';
+import { DamageComponent } from '../Components/DamageComponent';
 import { DashComponent } from '../Components/DashComponent';
 import { HealthComponent } from '../Components/HealthComponent';
 import { MoveComponent } from '../Components/MoveComponent';
@@ -15,4 +16,5 @@ export type ComponentMap = {
   [ComponentKey.COLLIDER]: ColliderComponent;
   [ComponentKey.SHOOT]: ShootComponent;
   [ComponentKey.AI]: AIComponent;
+  [ComponentKey.DAMAGE]: DamageComponent;
 };

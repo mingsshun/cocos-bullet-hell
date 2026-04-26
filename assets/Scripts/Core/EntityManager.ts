@@ -4,8 +4,8 @@ import { Entity } from "../Entity/Entity";
 export class EntityManager {
     static players: Entity[] = [];
     static enemies: Entity[] = [];
-    static player_bullets: Entity[] = [];
-    static enemy_bullets: Entity[] = [];
+    static playerBullets: Entity[] = [];
+    static enemyBullets: Entity[] = [];
 
     static all: Entity[] = [];
 
@@ -22,11 +22,11 @@ export class EntityManager {
                 break;
 
             case EntityType.PLAYER_BULLET:
-                this.player_bullets.push(entity);
+                this.playerBullets.push(entity);
                 break;
 
             case EntityType.ENEMY_BULLET:
-                this.enemy_bullets.push(entity);
+                this.enemyBullets.push(entity);
                 break;
         }
     }
@@ -38,8 +38,8 @@ export class EntityManager {
     static cleanup(): void {
         this.players = this.players.filter(e => !e.isRelease);
         this.enemies = this.enemies.filter(e => !e.isRelease);
-        this.player_bullets = this.player_bullets.filter(e => !e.isRelease);
-        this.enemy_bullets = this.enemy_bullets.filter(e => !e.isRelease);
+        this.playerBullets = this.playerBullets.filter(e => !e.isRelease);
+        this.enemyBullets = this.enemyBullets.filter(e => !e.isRelease);
 
         this.all = this.all.filter(e => !e.isRelease);
     }
@@ -51,8 +51,8 @@ export class EntityManager {
     static clearAll(): void {
         this.players.length = 0;
         this.enemies.length = 0;
-        this.player_bullets.length = 0;
-        this.enemy_bullets.length = 0
+        this.playerBullets.length = 0;
+        this.enemyBullets.length = 0
 
         this.all.length = 0;
     }
