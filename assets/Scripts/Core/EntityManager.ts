@@ -1,5 +1,6 @@
 import { EntityType } from "../Constants/EntityType";
 import { Entity } from "../Entity/Entity";
+import { PoolManager } from "./pool/PoolManager";
 
 export class EntityManager {
     static players: Entity[] = [];
@@ -49,6 +50,21 @@ export class EntityManager {
     }
 
     static clearAll(): void {
+        for (const e of this.all) {
+
+            if (e.isRelease) continue;
+
+            if (e.poolKey !== undefined) {
+                PoolManager.release(e.poolKey, e.node);
+            }
+            // else {
+            //     e.node.active = false;
+            // }
+
+            e.isRelease = true;
+        }
+
+
         this.players.length = 0;
         this.enemies.length = 0;
         this.playerBullets.length = 0;

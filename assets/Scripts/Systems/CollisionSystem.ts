@@ -107,7 +107,10 @@ export class CollisionSystem {
             this.releaseEntity(e);
 
             if (pHealth.hp <= 0) {
-                this.releaseEntity(player);
+                player.isRelease = true;
+                player.node.active = false;
+
+                GameManager.gameOver(false);
             }
         }
     }

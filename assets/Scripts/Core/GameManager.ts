@@ -1,20 +1,29 @@
 import { _decorator, Component, Node, Prefab } from 'cc';
-import { PoolManager } from './pool/PoolManager';
+import { PlayerAuthoring } from '../Authoring/PlayerAuthoring';
 import { PoolKey } from '../Constants/PoolKey';
 import { InputManager } from '../Input/InputManager';
-import { InputSystem } from '../Systems/InputSystem';
-import { MoveSystem } from '../Systems/MoveSystem';
-import { EntityManager } from './EntityManager';
-import { DashSystem } from '../Systems/DashSystem';
-import { PlayerAuthoring } from '../Authoring/PlayerAuthoring';
-import { SpawnSystem } from '../Systems/SpawnSystem';
-import { CombatSystem } from '../Systems/CombatSystem';
 import { AISystem } from '../Systems/AISystem';
 import { CollisionSystem } from '../Systems/CollisionSystem';
+import { CombatSystem } from '../Systems/CombatSystem';
+import { DashSystem } from '../Systems/DashSystem';
+import { InputSystem } from '../Systems/InputSystem';
+import { MoveSystem } from '../Systems/MoveSystem';
+import { SpawnSystem } from '../Systems/SpawnSystem';
+import { GameOverUI } from '../UI/GameOverUI';
+import { EntityManager } from './EntityManager';
+import { PoolManager } from './pool/PoolManager';
 const { ccclass, property } = _decorator;
+
+export enum GameState {
+    PLAYING,
+    GAME_OVER
+}
 
 @ccclass('GameManager')
 export class GameManager extends Component {
+    static instance: GameManager;
+    state: GameState = GameState.PLAYING;
+
     @property(Prefab) bulletPrefab: Prefab = null;
     @property(Prefab) chaserEnemyPrefab: Prefab = null;
     @property(Prefab) shooterEnemyPrefab: Prefab = null;
@@ -23,16 +32,35 @@ export class GameManager extends Component {
     @property(Node) enemyContainer: Node = null;
     @property(Node) bulletContainer: Node = null;
 
+    @property(GameOverUI) gameOverUI: GameOverUI = null!;
+
+    private time = 0;
+    private duration = 60;
+
+    protected onLoad(): void {
+        GameManager.instance = this;
+    }
+
     start() {
-        const playerAuthoring = this.playerNode.getComponent(PlayerAuthoring);
-        playerAuthoring.init();
-        EntityManager.add(playerAuthoring.getEntity());
+        this.initPlayer();
         //
-        const inputManager = new InputManager();
+        new InputManager();
         this.initPools();
+
+        this.gameOverUI.hide();
     }
 
     update(deltaTime: number) {
+        if (this.state !== GameState.PLAYING) return;
+
+        this.time += deltaTime;
+
+        if (this.time >= this.duration) {
+            GameManager.gameOver(true);
+            return;
+        }
+
+        // SYSTEM
         SpawnSystem.update(deltaTime);
 
         InputSystem.update();
@@ -45,6 +73,13 @@ export class GameManager extends Component {
         CollisionSystem.update();
 
         EntityManager.cleanup();
+    }
+
+    private initPlayer() {
+        const authoring = this.playerNode.getComponent(PlayerAuthoring);
+        authoring.init();
+
+        EntityManager.add(authoring.getEntity());
     }
 
     private initPools(): void {
@@ -74,7 +109,26 @@ export class GameManager extends Component {
     }
 
     static gameOver(isWin: boolean) {
-        console.log("isWin: " + isWin);
+        if (this.instance.state === GameState.GAME_OVER) return;
+
+        this.instance.state = GameState.GAME_OVER;
+
+        this.instance.playerNode.active = false;
+        this.instance.gameOverUI.show(isWin);
+    }
+
+    restart() {
+
+        this.state = GameState.PLAYING;
+
+        this.time = 0;
+
+        EntityManager.clearAll();
+
+        this.playerNode.active = true;
+        this.initPlayer();
+
+        this.gameOverUI.hide();
     }
 }
 
