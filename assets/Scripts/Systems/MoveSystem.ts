@@ -15,12 +15,12 @@ export class MoveSystem {
 
             if (dir.lengthSqr() === 0) continue;
 
-            const pos = entity.node.worldPosition.clone();
+            const pos = entity.node.position.clone();
 
             pos.x += dir.x * move.speed * dt;
             pos.y += dir.y * move.speed * dt;
 
-            entity.node.setWorldPosition(pos);
+            entity.node.setPosition(pos);
         }
     }
 }

@@ -13,7 +13,7 @@ export class EnemyFactory {
         const key = this.getEnemyPoolKey();
 
         const node = PoolManager.spawn(key);
-        node.setWorldPosition(pos);
+        node.setPosition(pos);
 
         const authoring = node.getComponent(EnemyAuthoring);
         authoring.init();

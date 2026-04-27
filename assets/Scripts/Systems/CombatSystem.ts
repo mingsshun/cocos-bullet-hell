@@ -28,7 +28,7 @@ export class CombatSystem {
                 const player = EntityManager.getPlayer();
                 if (!player) continue;
 
-                const dist = MathUtil.distanceSqr(entity.node.worldPosition, player.node.worldPosition);
+                const dist = MathUtil.distanceSqr(entity.node.position, player.node.position);
                 if (dist <= shoot.range * shoot.range) {
                     target = player;
                 }
@@ -38,13 +38,13 @@ export class CombatSystem {
 
             // ===== shoot =====
             const dir = new Vec3();
-            Vec3.subtract(dir, target.node.worldPosition, entity.node.worldPosition);
+            Vec3.subtract(dir, target.node.position, entity.node.position);
             dir.normalize();
 
             if (entity.type === EntityType.PLAYER) {
-                BulletFactory.spawnPlayerBullet(entity.node.worldPosition, dir);
+                BulletFactory.spawnPlayerBullet(entity.node.position, dir);
             } else {
-                BulletFactory.spawnEnemyBullet(entity.node.worldPosition, dir);
+                BulletFactory.spawnEnemyBullet(entity.node.position, dir);
             }
 
             shoot.timer = shoot.cooldown;
@@ -55,10 +55,10 @@ export class CombatSystem {
         let nearest = null;
         let minDist = Infinity;
 
-        const pos = source.node.worldPosition;
+        const pos = source.node.position;
 
         for (const e of list) {
-            const dist = MathUtil.distanceSqr(pos, e.node.worldPosition);
+            const dist = MathUtil.distanceSqr(pos, e.node.position);
 
             if (dist < minDist * minDist && dist <= range * range) {
                 minDist = dist;

@@ -31,8 +31,8 @@ export class CollisionSystem {
                 const eCol = e.getComponent(ComponentKey.COLLIDER);
 
                 if (!this.isCollide(
-                    b.node.worldPosition, bCol.radius,
-                    e.node.worldPosition, eCol.radius
+                    b.node.position, bCol.radius,
+                    e.node.position, eCol.radius
                 )) continue;
 
                 const health = e.getComponent(ComponentKey.HEALTH);
@@ -66,8 +66,8 @@ export class CollisionSystem {
             const dmg = b.getComponent(ComponentKey.DAMAGE);
 
             if (!this.isCollide(
-                b.node.worldPosition, bCol.radius,
-                player.node.worldPosition, pCol.radius
+                b.node.position, bCol.radius,
+                player.node.position, pCol.radius
             )) continue;
 
             pHealth.hp -= dmg.value;
@@ -100,8 +100,8 @@ export class CollisionSystem {
             const eDmg = e.getComponent(ComponentKey.DAMAGE);
 
             if (!this.isCollide(
-                e.node.worldPosition, eCol.radius,
-                player.node.worldPosition, pCol.radius
+                e.node.position, eCol.radius,
+                player.node.position, pCol.radius
             )) continue;
 
             pHealth.hp -= eDmg.value;

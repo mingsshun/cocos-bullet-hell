@@ -24,7 +24,7 @@ export class SpawnSystem {
         const player = EntityManager.getPlayer();
         if (!player) return;
 
-        const pos = this.getSpawnPos(player.node.worldPosition);
+        const pos = this.getSpawnPos(player.node.position);
 
         EnemyFactory.spawn(pos);
 

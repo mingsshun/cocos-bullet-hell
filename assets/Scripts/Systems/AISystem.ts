@@ -9,11 +9,11 @@ export class AISystem {
         const player = EntityManager.getPlayer();
         if (!player) return;
 
-        const playerPos = player.node.worldPosition;
+        const playerPos = player.node.position;
 
         for (const e of EntityManager.enemies) {
             if (e.isRelease) continue;
-            const enemyPos = e.node.worldPosition;
+            const enemyPos = e.node.position;
 
             const move = e.getComponent(ComponentKey.MOVE);
             const shoot = e.getComponent(ComponentKey.SHOOT);

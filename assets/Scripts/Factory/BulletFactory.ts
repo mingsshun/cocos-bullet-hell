@@ -9,7 +9,7 @@ export class BulletFactory {
 
     static spawnPlayerBullet(pos: Vec3, dir: Vec3): void {
         const node = PoolManager.spawn(PoolKey.BULLET_PLAYER);
-        node.setWorldPosition(pos);
+        node.setPosition(pos);
 
         const authoring = node.getComponent(BulletAuthoring);
         authoring.init(EntityType.PLAYER_BULLET, dir, 500);
@@ -19,7 +19,7 @@ export class BulletFactory {
 
     static spawnEnemyBullet(pos: Vec3, dir: Vec3): void {
         const node = PoolManager.spawn(PoolKey.BULLET_ENEMY);
-        node.setWorldPosition(pos);
+        node.setPosition(pos);
 
         const authoring = node.getComponent(BulletAuthoring);
         authoring.init(EntityType.ENEMY_BULLET, dir, 300);
