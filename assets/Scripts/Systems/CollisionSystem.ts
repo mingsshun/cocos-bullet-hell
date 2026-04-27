@@ -5,6 +5,8 @@ import { Entity } from '../Entity/Entity';
 import { PoolManager } from '../Core/pool/PoolManager';
 import { GameManager } from '../Core/GameManager';
 import { MathUtil } from '../Utils/MathUtil';
+import { EnemyAuthoring } from '../Authoring/EnemyAuthoring';
+import { PlayerAuthoring } from '../Authoring/PlayerAuthoring';
 
 export class CollisionSystem {
     static update() {
@@ -71,6 +73,7 @@ export class CollisionSystem {
             )) continue;
 
             pHealth.hp -= dmg.value;
+            GameManager.updateHp(pHealth.hp);
 
             EntityManager.release(b);
 
@@ -79,6 +82,10 @@ export class CollisionSystem {
                 player.node.active = false;
 
                 GameManager.gameOver(false);
+            }
+            else {
+                const authoring = player.node.getComponent(PlayerAuthoring);
+                authoring?.playHitFlash();
             }
         }
     }
@@ -105,6 +112,7 @@ export class CollisionSystem {
             )) continue;
 
             pHealth.hp -= eDmg.value;
+            GameManager.updateHp(pHealth.hp);
 
             EntityManager.release(e);
 
@@ -113,6 +121,10 @@ export class CollisionSystem {
                 player.node.active = false;
 
                 GameManager.gameOver(false);
+            }
+            else {
+                const authoring = player.node.getComponent(PlayerAuthoring);
+                authoring?.playHitFlash();
             }
         }
     }

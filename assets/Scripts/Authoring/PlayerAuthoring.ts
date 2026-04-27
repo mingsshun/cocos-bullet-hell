@@ -10,6 +10,7 @@ import { HealthComponent } from '../Components/HealthComponent';
 import { ColliderComponent } from '../Components/ColliderComponent';
 import { ShootComponent } from '../Components/ShootComponent';
 import { GameConfig } from '../Config';
+import { GameManager } from '../Core/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerAuthoring')
@@ -36,6 +37,8 @@ export class PlayerAuthoring extends BaseAuthoring {
 
         const health = this.entity.getComponent(ComponentKey.HEALTH);
         health.hp = GameConfig.player.hp;
+
+        GameManager.updateHp(health.hp);
 
         const shoot = this.entity.getComponent(ComponentKey.SHOOT);
         shoot.range = GameConfig.player_shooter.range;

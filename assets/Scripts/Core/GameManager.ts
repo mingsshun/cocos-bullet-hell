@@ -13,6 +13,7 @@ import { GameOverUI } from '../UI/GameOverUI';
 import { EntityManager } from './EntityManager';
 import { PoolManager } from './pool/PoolManager';
 import { GameConfig } from '../Config';
+import { IngameUI } from '../UI/IngameUI';
 const { ccclass, property } = _decorator;
 
 export enum GameState {
@@ -33,7 +34,8 @@ export class GameManager extends Component {
     @property(Node) enemyContainer: Node = null;
     @property(Node) bulletContainer: Node = null;
 
-    @property(GameOverUI) gameOverUI: GameOverUI = null!;
+    @property(GameOverUI) gameOverUI: GameOverUI = null;
+    @property(IngameUI) ingameUI: IngameUI = null;
 
     private time = 0;
     private duration = GameConfig.game_duration;
@@ -55,6 +57,8 @@ export class GameManager extends Component {
         if (this.state !== GameState.PLAYING) return;
 
         this.time += deltaTime;
+
+        this.ingameUI.updateTimer(this.time);
 
         if (this.time >= this.duration) {
             GameManager.gameOver(true);
@@ -116,6 +120,10 @@ export class GameManager extends Component {
 
         this.instance.playerNode.active = false;
         this.instance.gameOverUI.show(isWin);
+    }
+
+    static updateHp(current: number): void {
+        this.instance.ingameUI.updateHp(current);
     }
 
     restart() {
