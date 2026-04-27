@@ -3,6 +3,7 @@ import { EntityManager } from '../Core/EntityManager';
 import { ComponentKey } from '../Constants/ComponentKey';
 import { EntityType } from '../Constants/EntityType';
 import { BulletFactory } from '../Factory/BulletFactory';
+import { MathUtil } from '../Utils/MathUtil';
 
 export class CombatSystem {
 
@@ -27,8 +28,8 @@ export class CombatSystem {
                 const player = EntityManager.getPlayer();
                 if (!player) continue;
 
-                const dist = Vec3.distance(entity.node.worldPosition, player.node.worldPosition);
-                if (dist <= shoot.range) {
+                const dist = MathUtil.distanceSqr(entity.node.worldPosition, player.node.worldPosition);
+                if (dist <= shoot.range * shoot.range) {
                     target = player;
                 }
             }
@@ -57,9 +58,9 @@ export class CombatSystem {
         const pos = source.node.worldPosition;
 
         for (const e of list) {
-            const dist = Vec3.distance(pos, e.node.worldPosition);
+            const dist = MathUtil.distanceSqr(pos, e.node.worldPosition);
 
-            if (dist < minDist && dist <= range) {
+            if (dist < minDist * minDist && dist <= range * range) {
                 minDist = dist;
                 nearest = e;
             }

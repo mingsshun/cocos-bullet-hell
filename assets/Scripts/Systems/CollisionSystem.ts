@@ -4,6 +4,7 @@ import { ComponentKey } from '../Constants/ComponentKey';
 import { Entity } from '../Entity/Entity';
 import { PoolManager } from '../Core/pool/PoolManager';
 import { GameManager } from '../Core/GameManager';
+import { MathUtil } from '../Utils/MathUtil';
 
 export class CollisionSystem {
     static update() {
@@ -117,7 +118,8 @@ export class CollisionSystem {
     }
 
     static isCollide(posA: Vec3, rA: number, posB: Vec3, rB: number): boolean {
-        return Vec3.distance(posA, posB) <= (rA + rB);
+
+        return MathUtil.distanceSqr(posA, posB) <= (rA + rB) * (rA + rB);
     }
 
     static releaseEntity(entity: Entity) {

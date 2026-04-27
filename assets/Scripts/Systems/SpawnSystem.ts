@@ -2,6 +2,7 @@ import { Vec3 } from "cc";
 import { EntityManager } from "../Core/EntityManager";
 import { EnemyFactory } from "../Factory/EnemyFactory";
 import { GameConfig } from "../Config";
+import { MathUtil } from "../Utils/MathUtil";
 
 export class SpawnSystem {
 
@@ -40,6 +41,10 @@ export class SpawnSystem {
 
         let pos: Vec3;
         let tries = 0;
+        let distanceSqr = 0;
+
+        const minDistance = GameConfig.spawn_enemy.min_dist;
+        const maxDistance = GameConfig.spawn_enemy.max_dist;
 
         const map = GameConfig.map;
         do {
@@ -49,8 +54,11 @@ export class SpawnSystem {
             pos = new Vec3(x, y, 0);
             tries++;
 
+            distanceSqr = MathUtil.distanceSqr(pos, playerPos)
+
         } while (
-            Vec3.distance(pos, playerPos) < 150 &&
+            distanceSqr < minDistance * minDistance &&
+            distanceSqr > maxDistance * maxDistance &&
             tries < 10
         );
 

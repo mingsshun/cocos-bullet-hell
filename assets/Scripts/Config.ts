@@ -33,7 +33,9 @@ export const GameConfig = {
     spawn_enemy: {
         start_interval: 1.5,
         min_interval: 0.5,
-        decay_rate: 0.98
+        decay_rate: 0.98,
+        min_dist: 220,
+        max_dist: 600
     },
     enemy_ratio: {
         min_shooter: 0.2,
