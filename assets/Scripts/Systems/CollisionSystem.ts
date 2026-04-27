@@ -38,10 +38,10 @@ export class CollisionSystem {
                 const health = e.getComponent(ComponentKey.HEALTH);
                 health.hp -= dmg.value;
 
-                this.releaseEntity(b);
+                EntityManager.release(b);
 
                 if (health.hp <= 0) {
-                    this.releaseEntity(e);
+                    EntityManager.release(e);
                 }
 
                 break;
@@ -72,7 +72,7 @@ export class CollisionSystem {
 
             pHealth.hp -= dmg.value;
 
-            this.releaseEntity(b);
+            EntityManager.release(b);
 
             if (pHealth.hp <= 0) {
                 player.isRelease = true;
@@ -106,7 +106,7 @@ export class CollisionSystem {
 
             pHealth.hp -= eDmg.value;
 
-            this.releaseEntity(e);
+            EntityManager.release(e);
 
             if (pHealth.hp <= 0) {
                 player.isRelease = true;
@@ -120,14 +120,5 @@ export class CollisionSystem {
     static isCollide(posA: Vec3, rA: number, posB: Vec3, rB: number): boolean {
 
         return MathUtil.distanceSqr(posA, posB) <= (rA + rB) * (rA + rB);
-    }
-
-    static releaseEntity(entity: Entity) {
-
-        if (entity.isRelease) return;
-
-        entity.isRelease = true;
-
-        PoolManager.release(entity.poolKey, entity.node);
     }
 }

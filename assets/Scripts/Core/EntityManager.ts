@@ -33,7 +33,11 @@ export class EntityManager {
     }
 
     static release(entity: Entity): void {
+        if (entity.isRelease) return;
+
         entity.isRelease = true;
+
+        PoolManager.release(entity.poolKey, entity.node);
     }
 
     static cleanup(): void {

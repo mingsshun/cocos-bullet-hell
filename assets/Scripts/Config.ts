@@ -1,9 +1,9 @@
 export const GameConfig = {
     map: {
-        minX: -800,
-        maxX: 800,
-        minY: -450,
-        maxY: 450
+        minX: -900,
+        maxX: 900,
+        minY: -500,
+        maxY: 500
     },
     player_shooter: {
         range: 250,
