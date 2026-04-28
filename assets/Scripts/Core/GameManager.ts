@@ -37,7 +37,7 @@ export class GameManager extends Component {
     @property(GameOverUI) gameOverUI: GameOverUI = null;
     @property(IngameUI) ingameUI: IngameUI = null;
 
-    private time = 0;
+    private time = GameConfig.game_duration;
     private duration = GameConfig.game_duration;
 
     protected onLoad(): void {
@@ -56,11 +56,11 @@ export class GameManager extends Component {
     update(deltaTime: number) {
         if (this.state !== GameState.PLAYING) return;
 
-        this.time += deltaTime;
+        this.time -= deltaTime;
 
         this.ingameUI.updateTimer(this.time);
 
-        if (this.time >= this.duration) {
+        if (this.time <= 0) {
             GameManager.gameOver(true);
             return;
         }
@@ -130,7 +130,7 @@ export class GameManager extends Component {
 
         this.state = GameState.PLAYING;
 
-        this.time = 0;
+        this.time = this.duration;
 
         EntityManager.clearAll();
 

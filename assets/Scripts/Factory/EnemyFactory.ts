@@ -27,7 +27,8 @@ export class EnemyFactory {
     static getEnemyPoolKey(): PoolKey {
 
         const time = GameManager.instance.getTime();
-        const t = Math.min(time / GameConfig.game_duration, 1); // normalize 0 → 1
+        const curDuration = GameConfig.game_duration - time
+        const t = Math.min(curDuration / GameConfig.game_duration, 1); // normalize 0 → 1
 
         const shooterRatio = this.lerp(0.2, 0.5, t);
 

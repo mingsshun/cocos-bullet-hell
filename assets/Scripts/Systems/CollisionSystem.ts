@@ -7,6 +7,7 @@ import { GameManager } from '../Core/GameManager';
 import { MathUtil } from '../Utils/MathUtil';
 import { EnemyAuthoring } from '../Authoring/EnemyAuthoring';
 import { PlayerAuthoring } from '../Authoring/PlayerAuthoring';
+import { EventKey, GameEvent } from '../Core/GameEvent';
 
 export class CollisionSystem {
     static update() {
@@ -44,6 +45,11 @@ export class CollisionSystem {
 
                 if (health.hp <= 0) {
                     EntityManager.release(e);
+
+                    GameEvent.emit(EventKey.SCREEN_SHAKE, {
+                        intensity: 6,
+                        duration: 0.1,
+                    });
                 }
 
                 break;
@@ -72,7 +78,7 @@ export class CollisionSystem {
                 player.node.position, pCol.radius
             )) continue;
 
-            pHealth.hp -= dmg.value;
+            pHealth.hp = Math.max(0, pHealth.hp - dmg.value);
             GameManager.updateHp(pHealth.hp);
 
             EntityManager.release(b);
@@ -86,6 +92,11 @@ export class CollisionSystem {
             else {
                 const authoring = player.node.getComponent(PlayerAuthoring);
                 authoring?.playHitFlash();
+
+                GameEvent.emit(EventKey.SCREEN_SHAKE, {
+                    intensity: 12,
+                    duration: 0.2,
+                });
             }
         }
     }
@@ -111,7 +122,7 @@ export class CollisionSystem {
                 player.node.position, pCol.radius
             )) continue;
 
-            pHealth.hp -= eDmg.value;
+            pHealth.hp = Math.max(0, pHealth.hp - eDmg.value);
             GameManager.updateHp(pHealth.hp);
 
             EntityManager.release(e);
@@ -125,6 +136,11 @@ export class CollisionSystem {
             else {
                 const authoring = player.node.getComponent(PlayerAuthoring);
                 authoring?.playHitFlash();
+
+                GameEvent.emit(EventKey.SCREEN_SHAKE, {
+                    intensity: 12,
+                    duration: 0.2,
+                });
             }
         }
     }
