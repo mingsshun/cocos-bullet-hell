@@ -97,6 +97,8 @@ export class CollisionSystem {
                     intensity: 12,
                     duration: 0.2,
                 });
+
+                GameEvent.emit(EventKey.HIT);
             }
         }
     }
@@ -141,6 +143,8 @@ export class CollisionSystem {
                     intensity: 12,
                     duration: 0.2,
                 });
+
+                GameEvent.emit(EventKey.HIT);
             }
         }
     }

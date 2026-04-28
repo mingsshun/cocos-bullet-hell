@@ -1,6 +1,7 @@
 import { GameConfig } from '../Config';
 import { ComponentKey } from '../Constants/ComponentKey';
 import { EntityManager } from '../Core/EntityManager';
+import { EventKey, GameEvent } from '../Core/GameEvent';
 import { InputManager } from '../Input/InputManager';
 
 export class DashSystem {
@@ -44,6 +45,8 @@ export class DashSystem {
 
             // move.speed *= dash.speedMultiplier;
             move.speed = GameConfig.player.dash_speed;
+
+            GameEvent.emit(EventKey.DASH);
         }
     }
 }

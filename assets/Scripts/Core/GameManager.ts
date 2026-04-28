@@ -14,6 +14,7 @@ import { EntityManager } from './EntityManager';
 import { PoolManager } from './pool/PoolManager';
 import { GameConfig } from '../Config';
 import { IngameUI } from '../UI/IngameUI';
+import { EventKey, GameEvent } from './GameEvent';
 const { ccclass, property } = _decorator;
 
 export enum GameState {
@@ -51,6 +52,8 @@ export class GameManager extends Component {
         this.initPools();
 
         this.gameOverUI.hide();
+
+        GameEvent.emit(EventKey.BGM_PLAY);
     }
 
     update(deltaTime: number) {
@@ -120,6 +123,8 @@ export class GameManager extends Component {
 
         this.instance.playerNode.active = false;
         this.instance.gameOverUI.show(isWin);
+
+        GameEvent.emit(EventKey.GAME_OVER);
     }
 
     static updateHp(current: number): void {
@@ -140,6 +145,8 @@ export class GameManager extends Component {
         this.initPlayer();
 
         this.gameOverUI.hide();
+
+        GameEvent.emit(EventKey.BGM_PLAY);
     }
 
     getTime(): number {
