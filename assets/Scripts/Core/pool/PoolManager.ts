@@ -11,10 +11,12 @@ export class PoolManager {
     }
 
     static spawn(key: PoolKey): Node {
-        return this.pools.get(key)!.get();
+        if(!this.pools.has(key)) return;
+        return this.pools.get(key).get();
     }
 
     static release(key: PoolKey, node: Node): void {
-        this.pools.get(key)!.release(node);
+        if(!this.pools.has(key)) return;
+        this.pools.get(key).release(node);
     }
 }
