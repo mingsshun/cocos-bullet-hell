@@ -62,8 +62,6 @@ export class SpawnSystem {
             tries < 10
         );
 
-        if(tries >= 10) pos = new Vec3(0, 0, 0);
-
         return pos;
     }
 }

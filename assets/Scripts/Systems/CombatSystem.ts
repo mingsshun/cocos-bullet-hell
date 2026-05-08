@@ -53,15 +53,15 @@ export class CombatSystem {
 
     static findNearest(source, list, range) {
         let nearest = null;
-        let minDist = Infinity;
+        let minDistSqr = Infinity;
 
         const pos = source.node.position;
 
         for (const e of list) {
-            const dist = MathUtil.distanceSqr(pos, e.node.position);
-
-            if (dist < minDist * minDist && dist <= range * range) {
-                minDist = dist;
+            const distSqr = MathUtil.distanceSqr(pos, e.node.position);
+            const rangeSqr = range * range;
+            if (distSqr < minDistSqr && distSqr <= rangeSqr) {
+                minDistSqr = distSqr;
                 nearest = e;
             }
         }
