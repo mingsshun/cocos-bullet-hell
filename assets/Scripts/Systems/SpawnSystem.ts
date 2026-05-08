@@ -57,8 +57,8 @@ export class SpawnSystem {
             distanceSqr = MathUtil.distanceSqr(pos, playerPos)
 
         } while (
-            distanceSqr < minDistance * minDistance &&
-            distanceSqr > maxDistance * maxDistance &&
+            (distanceSqr < minDistance * minDistance ||
+            distanceSqr > maxDistance * maxDistance) &&
             tries < 10
         );
 
