@@ -48,6 +48,10 @@ export class PlayerAuthoring extends BaseAuthoring {
         const collider = this.entity.getComponent(ComponentKey.COLLIDER);
         collider.radius = this.radius;
 
+        const dash = this.entity.getComponent(ComponentKey.DASH);
+        dash.isDashing = false;
+        dash.cooldownTimer = 0;
+
         this.entity.isRelease = false;
         this.node.active = true;
     }
